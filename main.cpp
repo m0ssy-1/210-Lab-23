@@ -70,11 +70,15 @@ while (running) {
 
 int main_menu() {
     int choice;
+    cout << "*** GOAT MANAGER 3001 ***";
+    cout << "[1] something";
+    cout << "[2] something";
+    cout << "[3] something";
+    cout << "[4] something";
     cout << "";
     cout << "";
-    cout << "";
-    cout << "";
-    cout << "";
-    cout << "";
-    cout << "";
+
+    while (!(cin >> choice) || choice < 1 || choice > 4) {
+        cin.
+    }
 }
