@@ -75,10 +75,41 @@ int main_menu() {
     cout << "[2] something";
     cout << "[3] something";
     cout << "[4] something";
-    cout << "";
-    cout << "";
+    cout << "something";
+    cout << "something";
 
     while (!(cin >> choice) || choice < 1 || choice > 4) {
-        cin.
+        cin.clear();
+        cin.ignore(10000, '\n');
+        cout << "Invalid choice. Try again (1-4): ";
     }
+    return choice;
 }
+//adds a goat
+void add_goat(list<Goat> &trip, string names[], string colors[]) {
+    string randName = names[rand() % SZ_NAMES];
+    string randColor = colors[rand() % SZ_COLORS];
+    int randAge = rand() % (MAX_AGE + 1)
+
+    Goat g(randName, randAge, randColor);
+    trip.push_back(g);
+
+    cout << "goat added: " << randName << "Age: " << randAge << "Color: " << randColor << endl;
+}
+
+void delete_goat(list<Goat> &trip) {
+    if (trip.empty()) {
+        cout << "No goats deleted.";
+        return;
+    }
+    
+    int index = select_goat(trip);
+    if (index == -1) return;
+
+    auto it = trip.begin();
+    advance(it, index - 1);
+    cout << "delets sometihng" << it->get_name()
+        << " " << it->get_age() << " " << it->get_color() << endl;
+    trip.erase(it);
+}
+
