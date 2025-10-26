@@ -10,8 +10,9 @@ private:
     string name;
     int age;
     string color;
+
 public: 
-    Goat()                          { name = ""; age = 0; color = ""; }
+    Goat() { name = ""; age = 0; color = ""; }
 
     Goat(string n) {name = n; age = 0; color = "";}
 
@@ -28,7 +29,10 @@ public:
     void set_color(string c)        { color = c; }
     string get_color() const        { return color; }
 
-    // write overloaded < operator for the std::list
+    //overloaded < operator for the std::list
+    bool operator<(const Goat &rhs) const {
+        return name < rhs.name;
+    }
 };
 
 #endif
