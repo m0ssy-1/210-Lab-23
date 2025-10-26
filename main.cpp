@@ -2,18 +2,18 @@
 #include <fstream>
 #include <iomanip>
 #include <list>
-#include "Goat.h"
 #include <cstdlib>
 #include <ctime>
+#include "Goat.h"
 using namespace std;
 
 const int SZ_NAMES = 200, SZ_COLORS = 25, MAX_AGE = 20;
 
-int select_goat(const list<Goat> trip);
-void delete_goat(list<Goat> &trip);
-void add_goat(list<Goat> &trip, string [], string []);
-void display_trip(const list<Goat> trip);
 int main_menu();
+void add_goat(list<Goat> &trip, string [], string []);
+void delete_goat(list<Goat> &trip);
+void display_trip(const list<Goat> &trip);
+int select_goat(const list<Goat> &trip);
 
 int main() {
     srand(time(0));
@@ -22,7 +22,7 @@ int main() {
 
     ifstream fin("names.txt");
     if (!fin) {
-        cerr << "Error: names.txt not found";
+        cerr << "Error: names.txt not found\n";
         return 1;
     }
 
@@ -34,7 +34,7 @@ int main() {
 
     ifstream fin2("colors.txt");
     if (!fin2) {
-        cerr << "Error: colors.txt not found";
+        cerr << "Error: colors.txt not found\n";
         return 1;
     }
 //same changes as above
@@ -61,7 +61,7 @@ while (running) {
             break;
         case 4:
             running = false;
-            cout << "goodbye";
+            cout << "\nGoat Manager 3001 says Goodbye~";
             break;
     }
 }
@@ -70,13 +70,12 @@ while (running) {
 
 int main_menu() {
     int choice;
-    cout << "*** GOAT MANAGER 3001 ***";
-    cout << "[1] something";
-    cout << "[2] something";
-    cout << "[3] something";
-    cout << "[4] something";
-    cout << "something";
-    cout << "something";
+    cout << "\n*** GOAT MANAGER 3001 ***\n";
+    cout << "[1] Add a goat\n";
+    cout << "[2] Delete a goat\n";
+    cout << "[3] List goats\n";
+    cout << "[4] Quit\n";
+    cout << "Choice --> ";
 
     while (!(cin >> choice) || choice < 1 || choice > 4) {
         cin.clear();
@@ -94,12 +93,12 @@ void add_goat(list<Goat> &trip, string names[], string colors[]) {
     Goat g(randName, randAge, randColor);
     trip.push_back(g);
 
-    cout << "goat added: " << randName << "Age: " << randAge << "Color: " << randColor << endl;
+    cout << "\nAdded goat: " << randName << " (" << randAge << ", " << randColor << ")\n";
 }
 //deletes a goat
 void delete_goat(list<Goat> &trip) {
     if (trip.empty()) {
-        cout << "No goats deleted.";
+        cout << "\nNo goats deleted.\n";
         return;
     }
     
@@ -108,20 +107,20 @@ void delete_goat(list<Goat> &trip) {
 
     auto it = trip.begin();
     advance(it, index - 1);
-    cout << "delets sometihng" << it->get_name()
-        << " " << it->get_age() << " " << it->get_color() << endl;
+    cout << "Deleting " << it->get_name()
+        << " (" << it->get_age() << ", " << it->get_color() << ")\n";
     trip.erase(it);
 }
 
 //select a goat
 int select_goat(const list<Goat> &trip) {
     display_trip(trip);
-    cout << "select a goat" << trip.size() << "0 to cancel";
+    cout << "Select a goat to delete [1-" << trip.size() << "] (0 to cancel): ";
     int choice;
     cin >> choice;
     if (choice == 0) return -1;
     if (choice < 1 || choice > trip.size()) {
-        cout << "invalid choice";
+        cout << "Invalid choice.\n";
         return -1;
     }
     return choice;
@@ -130,14 +129,14 @@ int select_goat(const list<Goat> &trip) {
 //displays goats
 void display_trip(const list<Goat> &trip) {
     if (trip.empty()) {
-        cout << "No goats this trip";
+        cout << "\nNo goats this trip.\n";
         return;
     }
 
-    cout << "current goat";
-    cout << left << setw(5) << "#" << setw(15) << "name"
-         << setw(8) << "age" << setw(10) << "Color" << endl;
-    cout << " ";
+    cout << "\nCurrent Goat:\n";
+    cout << left << setw(5) << "#" << setw(15) << "Name"
+         << setw(8) << "Age" << setw(10) << "Color" << endl;
+    cout << "-------------------------------\n";
 
     int i = 1;
     for (const auto &g : trip) {
