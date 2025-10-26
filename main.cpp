@@ -21,7 +21,6 @@ int main() {
 
     string names[SZ_NAMES], colors[SZ_COLORS];
 
-    // read & populate arrays for names and colors
     ifstream fin("names.txt");
     if (!fin) {
         cerr << "Error: names.txt not found!";
@@ -29,7 +28,7 @@ int main() {
     }
 
     int i = 0;
-    while (fin >> names[i++]);
+    while (i < SZ_NAMES && fin >> names[i]) i++;
     fin.close();
     ifstream fin1("colors.txt");
     string colors[SZ_COLORS];
