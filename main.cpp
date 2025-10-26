@@ -32,7 +32,7 @@ int main() {
     int num_names = i;
     fin.close();
 
-    ifstream fin1("colors.txt");
+    ifstream fin2("colors.txt");
     if (!fin2) {
         cerr << "Error: colors.txt not found";
         return 1;
@@ -41,7 +41,7 @@ int main() {
     i = 0;
     while (i < SZ_COLORS && fin2 >> colors[i]) i++;
     int num_colors = i;
-    fin1.close();
+    fin2.close();
 
 list <Goat> trip;
 
@@ -50,7 +50,7 @@ while (running) {
     int choice = main_menu();
 
     switch (choice) {
-        case 1;
+        case 1:
             add_goat(trip, names, colors);
             break;
         case 2:
@@ -89,14 +89,14 @@ int main_menu() {
 void add_goat(list<Goat> &trip, string names[], string colors[]) {
     string randName = names[rand() % SZ_NAMES];
     string randColor = colors[rand() % SZ_COLORS];
-    int randAge = rand() % (MAX_AGE + 1)
+    int randAge = rand() % (MAX_AGE + 1);
 
     Goat g(randName, randAge, randColor);
     trip.push_back(g);
 
     cout << "goat added: " << randName << "Age: " << randAge << "Color: " << randColor << endl;
 }
-
+//deletes a goat
 void delete_goat(list<Goat> &trip) {
     if (trip.empty()) {
         cout << "No goats deleted.";
@@ -113,3 +113,37 @@ void delete_goat(list<Goat> &trip) {
     trip.erase(it);
 }
 
+//select a goat
+int select_goat(const list<Goat> &trip) {
+    display_trip(trip);
+    cout << "select a goat" << trip.size() << "0 to cancel";
+    int choice;
+    cin >> choice;
+    if (choice == 0) return -1;
+    if (choice < 1 || choice > trip.size()) {
+        cout << "invalid choice";
+        return -1;
+    }
+    return choice;
+}
+
+//displays goats
+void display_trip(const list<Goat> &trip) {
+    if (trip.empty()) {
+        cout << "No goats this trip";
+        return;
+    }
+
+    cout << "current goat";
+    cout << left << setw(5) << "#" << setw(15) << "name"
+         << setw(8) << "age" << setw(10) << "Color" << endl;
+    cout << " ";
+
+    int i = 1;
+    for (const auto &g : trip) {
+        cout << left << setw(5) << i++
+             << setw(15) << g.get_name()
+             << setw(8) << g.get_age()
+             << setw(10) << g.get_color() << endl;
+    }
+}
